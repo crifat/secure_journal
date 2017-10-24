@@ -1,5 +1,4 @@
 class DiariesController < ApplicationController
-  before_action :set_diary, only: [:show, :update, :destroy]
 
   # GET /diaries
   def index
@@ -10,7 +9,8 @@ class DiariesController < ApplicationController
 
   # GET /diaries/1
   def show
-    render json: @diary
+    @result = Diary::Show.(params)
+    render json: @result['presenter.default'], status: @result['response.status']
   end
 
   # POST /diaries
@@ -21,11 +21,9 @@ class DiariesController < ApplicationController
 
   # PATCH/PUT /diaries/1
   def update
-    if @diary.update(diary_params)
-      render json: @diary
-    else
-      render json: @diary.errors, status: :unprocessable_entity
-    end
+    @result = Diary::Update.(params)
+
+    render json: @result['presenter.default'], status: @result['response.status']
   end
 
   # DELETE /diaries/1
@@ -34,11 +32,6 @@ class DiariesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_diary
-      @diary = Diary.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def diary_params
       params.require(:diary).permit(:name, :user_id)

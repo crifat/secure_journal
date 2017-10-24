@@ -1,7 +1,7 @@
-class Diary::Create < Trailblazer::Operation
+class Diary::Update < Trailblazer::Operation
   extend Contract::DSL
 
-  step     Model( Diary, :new )
+  step     Model( Diary, :find )
   step     Contract::Build(constant: Diary::Contract::DiaryForm)
   step     Contract::Validate( key: :diary )
   failure  :log_error!
@@ -16,7 +16,7 @@ class Diary::Create < Trailblazer::Operation
   end
 
   def generate_json(options)
-    options['response.status'] = 201
+    options['response.status'] = 200
     options['presenter.default'] = DiaryDecorator.new(options['model']).to_json
   end
 end
