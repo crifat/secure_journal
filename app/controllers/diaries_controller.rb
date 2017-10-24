@@ -1,5 +1,7 @@
 class DiariesController < ApplicationController
 
+  before_action :set_diary, only: [:destroy]
+
   # GET /diaries
   def index
     @diaries = Diary.all
@@ -32,6 +34,9 @@ class DiariesController < ApplicationController
   end
 
   private
+  def set_diary
+    @diary = Diary.find(params[:id])
+  end
     # Only allow a trusted parameter "white list" through.
     def diary_params
       params.require(:diary).permit(:name, :user_id)

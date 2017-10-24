@@ -1,6 +1,7 @@
 class Diary::Update < Trailblazer::Operation
   extend Contract::DSL
 
+  # step     :debug
   step     Model( Diary, :find )
   step     Contract::Build(constant: Diary::Contract::DiaryForm)
   step     Contract::Validate( key: :diary )
@@ -9,6 +10,10 @@ class Diary::Update < Trailblazer::Operation
 
   success :generate_json
   failure :log_error!
+
+  def debug(options)
+    binding.pry
+  end
 
   def log_error!(options)
     options['response.status'] = 422
