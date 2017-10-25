@@ -1,6 +1,7 @@
 class DiariesController < ApplicationController
 
   before_action :set_diary, only: [:destroy]
+  before_action :authenticate_with_token!
 
   # GET /diaries
   def index

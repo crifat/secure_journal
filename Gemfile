@@ -46,3 +46,4 @@ gem "trailblazer", ">= 2.0.3"
 gem "trailblazer-rails"
 gem 'roar'
 gem 'multi_json'
+gem 'devise'
