@@ -1,6 +1,6 @@
 class ShowTest < ActiveSupport::TestCase
   test 'should display diary' do
-    diary = Diary::Create.({name: 'Test Diary'})
+    diary = Diary::Create.({diary: {name: 'Test Diary'}})
 
     result = Diary::Show.(id: diary['model'].id)
 
