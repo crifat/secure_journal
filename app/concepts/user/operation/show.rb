@@ -1,4 +1,4 @@
-class Diary::Show < Trailblazer::Operation
+class User::Show < Trailblazer::Operation
   step     Model( User, :find )
   success :generate_json
   failure :log_errors!

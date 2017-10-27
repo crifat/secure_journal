@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:destroy]
+  before_action :authenticate_with_token!
 
   # GET /entries
   def index

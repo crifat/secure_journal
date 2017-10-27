@@ -11,6 +11,6 @@ module User::Contract
     property :password_confirmation
 
     validates :email, presence: true
-    validates :email, unique: true, format: VALID_EMAIL_REGEX
+    # validates :email, unique: true, format: VALID_EMAIL_REGEX
   end
 end

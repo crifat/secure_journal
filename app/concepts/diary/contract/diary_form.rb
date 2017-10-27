@@ -4,6 +4,7 @@ module Diary::Contract
   class DiaryForm < Reform::Form
 
     property :name
+    property :user_id
 
     validates :name, presence: true
   end
