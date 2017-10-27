@@ -1,5 +1,4 @@
 class Entry::Create < Trailblazer::Operation
-  extend Contract::DSL
 
   step     Model( Entry, :new )
   step     :assign_diary

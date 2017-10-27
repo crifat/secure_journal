@@ -11,7 +11,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1
   def show
-    @result = Entry::Show.(params)
+    @result = Entry::Show.(params, 'current_user' => current_user)
     render json: @result['presenter.default'], status: @result['response.status']
   end
 

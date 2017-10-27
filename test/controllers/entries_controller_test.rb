@@ -4,7 +4,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     #TODO Need to move to the test helper
     @user = User::Create.(user: {email: "user-#{SecureRandom.hex(4)}@gmail.com", password: '121345678', password_confirmation: '12345678'})['model']
-    @diary = Diary::Create.({diary: {name: 'Test Diary'}})['model']
+    @diary = Diary::Create.({diary: {name: 'Test Diary', user_id: @user.id}})['model']
     @entry = Entry::Create.({entry: {title: 'Test Entry', body: 'Test Entry Body'}, diary_id: @diary.id})['model']
   end
 

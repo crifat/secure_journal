@@ -1,5 +1,4 @@
 class Diary::Create < Trailblazer::Operation
-  extend Contract::DSL
 
   step     Model( Diary, :new )
   step     Contract::Build(constant: Diary::Contract::DiaryForm)
