@@ -5,9 +5,9 @@ class DiariesController < ApplicationController
 
   # GET /diaries
   def index
-    @diaries = Diary.all
+    @result = Diary::Index.(params, 'current_user' => current_user)
 
-    render json: @diaries
+    render json: @result['presenter.default'], status: @result['response.status']
   end
 
   # GET /diaries/1

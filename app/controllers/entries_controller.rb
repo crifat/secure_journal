@@ -4,9 +4,9 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    @entries = Entry.all
+    @result = Entry::Index.(params, 'current_user' => current_user)
 
-    render json: @entries
+    render json: @result['presenter.default'], status: @result['response.status']
   end
 
   # GET /entries/1

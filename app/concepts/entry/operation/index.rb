@@ -1,6 +1,5 @@
-class Diary::Index < Trailblazer::Operation
+class Entry::Index < Trailblazer::Operation
   step :find_diary!
-  step :get_all_entries!
 
   success :generate_json!
   failure :log_errors!
@@ -9,12 +8,15 @@ class Diary::Index < Trailblazer::Operation
     options['diary'] = options['current_user'].diaries.find(options['params'][:diary_id])
   end
 
-  def get_all_entries!(options)
-
-  end
-
   def generate_json!(options)
-
+    data = {
+        diary: DiaryDecorator.new(options['diary']),
+        entries: []
+    }
+    options['diary'].entries.each do |entry|
+      data[:entries] << EntryDecorator.new(entry).as_json
+    end
+    options['presenter.default'] = data
   end
 
   def log_errors!(options)
