@@ -10,16 +10,16 @@ class Entry::Show < Trailblazer::Operation
   end
 
   def find_diary!(options)
-    options['diary'] = options['current_user'].diaries.find(options['params'][:diary_id])
+    options['diary'] = options['current_user'].diaries.find_by(id: options['params'][:diary_id])
   end
 
   def find_entry!(options)
-    options['model'] = options['diary'].entries.find(options['params'][:id])
+    options['model'] = options['diary'].entries.find_by(id: options['params'][:id])
   end
 
   def log_errors!(options)
-    options['response.status'] = 422
-    options['presenter.default'] = {errors: "Something is wrong" }
+    options['response.status'] = 404
+    options['presenter.default'] = {errors: "Not found" }
   end
 
   def generate_json(options)

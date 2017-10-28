@@ -5,7 +5,7 @@ class Entry::Index < Trailblazer::Operation
   failure :log_errors!
 
   def find_diary!(options)
-    options['diary'] = options['current_user'].diaries.find(options['params'][:diary_id])
+    options['diary'] = options['current_user'].diaries.find_by(id: options['params'][:diary_id])
   end
 
   def generate_json!(options)
@@ -21,6 +21,6 @@ class Entry::Index < Trailblazer::Operation
 
   def log_errors!(options)
     options['response.status'] = 404
-    options['presenter.default'] = {errors: options['contract.default'].errors.messages }
+    options['presenter.default'] = {errors: 'Not found' }
   end
 end

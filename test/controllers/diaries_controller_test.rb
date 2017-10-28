@@ -8,26 +8,40 @@ class DiariesControllerTest < ActionDispatch::IntegrationTest
     puts @diary.user_id
   end
 
+  test 'without auth token' do
+    get diaries_url, as: :json
+    assert_response 401
+  end
+
+  test 'wrong diary' do
+    get diary_url(id: @diary.id + 1), headers: { 'Authorization' => @user.auth_token }, as: :json
+    assert_response :missing
+    assert_includes 'Not found', JSON.parse(@response.body)['errors']
+  end
+
   test "should get index" do
     get diaries_url, headers: { 'Authorization' => @user.auth_token }, as: :json
     assert_response :success
+    assert_equal  JSON.parse(response.body).first['id'], @diary.id
   end
 
   test "should create diary" do
     assert_difference('Diary.count') do
-      post diaries_url, params: { diary: { name: @diary.name, user_id: @diary.user_id } }, headers: { 'Authorization' => @user.auth_token }, as: :json
+      post diaries_url, params: { diary: { name: 'New Diary', user_id: @diary.user_id } }, headers: { 'Authorization' => @user.auth_token }, as: :json
     end
-
+    assert_equal JSON.parse(@response.body)['name'], 'New Diary'
     assert_response 201
   end
 
   test "should show diary" do
     get diary_url(id: @diary.id), headers: { 'Authorization' => @user.auth_token }, as: :json
     assert_response :success
+    assert_equal JSON.parse(@response.body)['id'], @diary.id
   end
 
   test "should update diary" do
-    patch diary_url(@diary), params: { diary: { name: @diary.name, user_id: @diary.user_id } }, headers: { 'Authorization' => @user.auth_token }, as: :json
+    patch diary_url(@diary), params: { diary: { name: 'Updated Name', user_id: @diary.user_id } }, headers: { 'Authorization' => @user.auth_token }, as: :json
+    assert_equal JSON.parse(@response.body)['name'], 'Updated Name'
     assert_response 200
   end
 

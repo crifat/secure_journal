@@ -1,11 +1,11 @@
 class Diary::Show < Trailblazer::Operation
-  step     Model( Diary, :find )
+  step     Model( Diary, :find_by )
   success :generate_json
   failure :log_errors!
 
   def log_errors!(options)
-    options['response.status'] = 422
-    options['presenter.default'] = {errors: "Something is wrong" }
+    options['response.status'] = 404
+    options['presenter.default'] = {errors: "Not found" }
   end
 
   def generate_json(options)
