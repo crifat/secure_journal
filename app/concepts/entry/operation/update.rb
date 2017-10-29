@@ -5,6 +5,7 @@ class Entry::Update < Trailblazer::Operation
   step     Model( Entry, :find )
   step     Contract::Build(constant: Entry::Contract::EntryForm)
   step     Contract::Validate( key: :entry )
+  # step     :encrypt_entry!
   failure  :log_error!
   step     Contract::Persist(  )
 
@@ -13,6 +14,11 @@ class Entry::Update < Trailblazer::Operation
 
   def debug(options)
     binding.pry
+  end
+
+  def encrypt_entry!(options)
+    #FIXME: This won't work if the password is update.
+    #TODO: Decrypt and Re-encrypt every entry before updating password.
   end
 
   def log_error!(options)

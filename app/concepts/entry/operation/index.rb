@@ -13,6 +13,7 @@ class Entry::Index < Trailblazer::Operation
         diary: DiaryDecorator.new(options['diary']),
         entries: []
     }
+    #FIXME: Need to add Pagination
     options['diary'].entries.each do |entry|
       data[:entries] << EntryDecorator.new(entry).as_json
     end

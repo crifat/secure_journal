@@ -6,6 +6,7 @@ class User::Create < Trailblazer::Operation
   step     Contract::Build(constant: User::Contract::UserForm)
   step     Contract::Validate( key: :user )
   step     :generate_auth_token!
+  step     :generate_encryption_key!
   failure  :log_error!
   step     Contract::Persist(  )
 
@@ -21,6 +22,13 @@ class User::Create < Trailblazer::Operation
       random_token = SecureRandom.urlsafe_base64(nil, false)
       break random_token unless User.exists?(auth_token: random_token)
     end
+  end
+
+  def generate_encryption_key!(options)
+    actual_key = SecureRandom.hex(16)
+    password = options['params'][:user][:password]
+    encrypted_key = actual_key.encrypt(password)
+    options['contract.default'].model.encryption_key = encrypted_key
   end
 
   def log_error!(options)

@@ -31,7 +31,7 @@ class Session::Create < Trailblazer::Operation
 
   def generate_json!(options)
     options['response.status'] = 201
-    options['presenter.default'] = UserDecorator.new(options['model']).to_json
+    options['presenter.default'] = {id: options['model'][:id], auth_token: options['model'][:auth_token], decryptor_key: options['model'][:encryption_key].decrypt(options['params'][:session][:password])}
   end
 
   def log_errors!(options)
