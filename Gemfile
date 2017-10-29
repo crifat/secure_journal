@@ -47,3 +47,4 @@ gem "trailblazer-rails"
 gem 'roar'
 gem 'multi_json'
 gem 'devise'
+gem 'simplecov', :require => false, :group => :test
