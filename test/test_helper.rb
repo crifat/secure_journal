@@ -1,11 +1,10 @@
 require 'simplecov'
-
-# save to CircleCI's artifacts directory if we're on CircleCI
+require 'coveralls'
+Coveralls.wear!
 if ENV['CIRCLE_ARTIFACTS']
   dir = File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
   SimpleCov.coverage_dir(dir)
 end
-
 SimpleCov.start
 
 require File.expand_path('../../config/environment', __FILE__)

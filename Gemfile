@@ -48,3 +48,4 @@ gem 'roar'
 gem 'multi_json'
 gem 'devise'
 gem 'simplecov', :require => false, :group => :test
+gem 'coveralls', require: false, group: :test
