@@ -1,4 +1,4 @@
-class Session::Create < Trailblazer::Operation
+class Session::Destroy < Trailblazer::Operation
   extend Contract::DSL
   step     :find_user!
   step     :generate_auth_token!

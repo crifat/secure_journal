@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :sessions, only: [:create, :destroy]
+  post '/login' => 'sessions#create', as: :login
+  delete '/logout' => 'sessions#destroy', as: :logout
   resources :users, :only => [:show, :create, :update, :destroy]
   resources :diaries do
     resources :entries
