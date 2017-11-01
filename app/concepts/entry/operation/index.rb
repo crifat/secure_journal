@@ -9,11 +9,12 @@ class Entry::Index < Trailblazer::Operation
   end
 
   def generate_json!(options)
+    #TODO: Should use Decorator to generate the json
+    #FIXME: Need to add Pagination
     data = {
         diary: DiaryDecorator.new(options['diary']),
         entries: []
     }
-    #FIXME: Need to add Pagination
     options['diary'].entries.each do |entry|
       data[:entries] << EntryDecorator.new(entry).as_json
     end
